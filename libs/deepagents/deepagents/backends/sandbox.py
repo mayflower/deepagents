@@ -66,16 +66,12 @@ Uses base64-encoded parameters to avoid shell escaping issues.
 """
 
 _WRITE_CHECK_TEMPLATE = """python3 -c "
-import os, sys, base64
+import os, base64
 
 path = base64.b64decode('{path_b64}').decode('utf-8')
-if os.path.exists(path):
-    print('Error: File already exists: ' + repr(path))
-    sys.exit(1)
 os.makedirs(os.path.dirname(path) or '.', exist_ok=True)
 " 2>&1"""
-"""Preflight check for write operations: verify the target file does not already
-exist and create parent directories.
+"""Preflight check for write operations: create parent directories.
 
 Only the (small) base64-encoded path is interpolated — file content is
 transferred separately via `upload_files()`.
