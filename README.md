@@ -27,7 +27,7 @@ Deep Agents is an agent harness. An opinionated, ready-to-run agent out of the b
 
 - **Planning** — `write_todos` for task breakdown and progress tracking
 - **Filesystem** — `read_file`, `write_file`, `edit_file`, `ls`, `glob`, `grep` for reading and writing context
-- **Shell access** — `execute` for running commands (with sandboxing)
+- **Shell access** — `execute` for running commands (with sandboxing via [Daytona](libs/partners/daytona/), [Modal](libs/partners/modal/), [wasmsh](libs/partners/wasmsh/), and more)
 - **Sub-agents** — `task` for delegating work with isolated context windows
 - **Smart defaults** — Prompts that teach the model how to use these tools effectively
 - **Context management** — Auto-summarization when conversations get long, large outputs saved to files
@@ -91,6 +91,22 @@ curl -LsSf https://langch.in/gh-da-cli | bash
 - Plus all SDK features out of the box — remote sandboxes, persistent memory, custom skills, and human-in-the-loop approval
 
 See the [CLI documentation](https://docs.langchain.com/oss/python/deepagents/cli/overview) for the full feature set.
+
+### Sandbox Providers
+
+| Package | Environment | Description |
+|---------|------------|-------------|
+| `langchain-wasmsh` | Local (Node) | In-process Pyodide/WASM sandbox with bash + Python — no container required |
+| `langchain-daytona` | Daytona | Remote Daytona devbox |
+| `langchain-modal` | Modal | Remote Modal sandbox |
+
+```python
+from langchain_wasmsh import WasmshSandbox
+
+backend = WasmshSandbox()
+agent = create_deep_agent(backend=backend)
+# sandbox supports both bash and python3 in /workspace
+```
 
 ## LangGraph Native
 
