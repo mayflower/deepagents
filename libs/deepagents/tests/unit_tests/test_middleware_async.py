@@ -33,7 +33,7 @@ def _make_backend(files=None):
 
 
 def _runtime():
-    return ToolRuntime(state={}, context=None, tool_call_id="", store=None, stream_writer=lambda _: None, config={})
+    return ToolRuntime(tools=[], state={}, context=None, tool_call_id="", store=None, stream_writer=lambda _: None, config={})
 
 
 class TestFilesystemMiddlewareAsync:
@@ -574,7 +574,7 @@ class TestFilesystemMiddlewareAsync:
             {
                 "file_path": "/test.txt",
                 "content": "Hello world",
-                "runtime": ToolRuntime(state={}, context=None, tool_call_id="tc1", store=None, stream_writer=lambda _: None, config={}),
+                "runtime": ToolRuntime(tools=[], state={}, context=None, tool_call_id="tc1", store=None, stream_writer=lambda _: None, config={}),
             }
         )
         assert isinstance(result, ToolMessage)
@@ -597,7 +597,7 @@ class TestFilesystemMiddlewareAsync:
                 "file_path": "/test.txt",
                 "old_string": "Hello",
                 "new_string": "Hi",
-                "runtime": ToolRuntime(state={}, context=None, tool_call_id="tc2", store=None, stream_writer=lambda _: None, config={}),
+                "runtime": ToolRuntime(tools=[], state={}, context=None, tool_call_id="tc2", store=None, stream_writer=lambda _: None, config={}),
             }
         )
         assert isinstance(result, ToolMessage)
@@ -621,7 +621,7 @@ class TestFilesystemMiddlewareAsync:
                 "old_string": "Hello",
                 "new_string": "Hi",
                 "replace_all": True,
-                "runtime": ToolRuntime(state={}, context=None, tool_call_id="tc3", store=None, stream_writer=lambda _: None, config={}),
+                "runtime": ToolRuntime(tools=[], state={}, context=None, tool_call_id="tc3", store=None, stream_writer=lambda _: None, config={}),
             }
         )
         assert isinstance(result, ToolMessage)
@@ -637,6 +637,7 @@ class TestFilesystemMiddlewareAsync:
 
         # Create runtime with StoreBackend
         runtime = ToolRuntime(
+            tools=[],
             state={},
             context=None,
             tool_call_id="test_exec",
@@ -675,6 +676,7 @@ class TestFilesystemMiddlewareAsync:
 
         state = FilesystemState(messages=[], files={})
         rt = ToolRuntime(
+            tools=[],
             state=state,
             context=None,
             tool_call_id="test_zero_timeout_async",
@@ -717,6 +719,7 @@ class TestFilesystemMiddlewareAsync:
 
         state = FilesystemState(messages=[], files={})
         rt = ToolRuntime(
+            tools=[],
             state=state,
             context=None,
             tool_call_id="test_fmt",
@@ -760,6 +763,7 @@ class TestFilesystemMiddlewareAsync:
 
         state = FilesystemState(messages=[], files={})
         rt = ToolRuntime(
+            tools=[],
             state=state,
             context=None,
             tool_call_id="test_fail",
@@ -803,6 +807,7 @@ class TestFilesystemMiddlewareAsync:
 
         state = FilesystemState(messages=[], files={})
         rt = ToolRuntime(
+            tools=[],
             state=state,
             context=None,
             tool_call_id="test_trunc",

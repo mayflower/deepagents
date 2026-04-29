@@ -19,6 +19,7 @@ from deepagents.middleware.filesystem import FilesystemMiddleware
 def make_runtime(tid: str = "tc", *, store=None):
     """Minimal ToolRuntime - only needed for _intercept_large_tool_result calls."""
     return ToolRuntime(
+        tools=[],
         state={"messages": [], "files": {}},
         context=None,
         tool_call_id=tid,

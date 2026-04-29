@@ -27,6 +27,7 @@ def _make_composite_backend(*, artifacts_root: str = "/"):
 
 def _runtime(tool_call_id: str = "tc"):
     return ToolRuntime(
+        tools=[],
         state={"messages": [], "files": {}},
         context=None,
         tool_call_id=tool_call_id,

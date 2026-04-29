@@ -1658,6 +1658,40 @@ def test_skills_middleware_with_store_backend_instance() -> None:
     assert middleware.sources[0] == "/skills/user"
 
 
+def test_skills_middleware_resolves_callable_backend_factory() -> None:
+    """Verify `_get_backend` constructs a synthetic `ToolRuntime` for factories.
+
+    Regression test for the
+    `ToolRuntime.__init__() missing 1 required positional argument: 'tools'`
+    crash that surfaces against `langgraph-prebuilt` >= 1.0.12 (issue #2975).
+    """
+    captured_runtimes: list = []
+
+    def backend_factory(tool_runtime):
+        captured_runtimes.append(tool_runtime)
+        return StateBackend()
+
+    middleware = SkillsMiddleware(
+        backend=backend_factory,
+        sources=["/skills/user"],
+    )
+
+    runtime = SimpleNamespace(
+        context=None,
+        store=None,
+        stream_writer=lambda _: None,
+    )
+    backend = middleware._get_backend({"messages": [], "files": {}}, runtime, {})
+
+    assert isinstance(backend, StateBackend)
+    assert len(captured_runtimes) == 1
+    # Sanity-check the synthetic runtime was constructed with the contract
+    # the new ToolRuntime signature requires.
+    assert captured_runtimes[0].state == {"messages": [], "files": {}}
+    assert captured_runtimes[0].tool_call_id is None
+    assert captured_runtimes[0].tools == []
+
+
 async def test_agent_with_skills_middleware_async(tmp_path: Path) -> None:
     """Test that skills middleware works with async agent invocation."""
     backend = FilesystemBackend(root_dir=str(tmp_path), virtual_mode=False)

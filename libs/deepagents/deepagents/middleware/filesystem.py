@@ -1911,6 +1911,9 @@ class FilesystemMiddleware(AgentMiddleware[FilesystemState, ContextT, ResponseT]
         if not callable(self.backend):
             return self.backend
         config = cast("RunnableConfig", getattr(runtime, "config", {}))
+        # `tools=[]` reflects the synthetic nature: this runtime is only
+        # passed to the user's backend factory, which inspects
+        # `context`/`state`/`store`/`config` and never dispatches tools.
         tool_runtime = ToolRuntime(
             state=state,
             context=runtime.context,
@@ -1918,6 +1921,7 @@ class FilesystemMiddleware(AgentMiddleware[FilesystemState, ContextT, ResponseT]
             store=runtime.store,
             config=config,
             tool_call_id=None,
+            tools=[],
         )
         return self.backend(tool_runtime)  # ty: ignore[call-top-callable, invalid-argument-type]
 

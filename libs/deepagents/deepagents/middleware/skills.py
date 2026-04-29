@@ -903,7 +903,10 @@ class SkillsMiddleware(AgentMiddleware[SkillsState, ContextT, ResponseT]):
             Resolved backend instance
         """
         if callable(self._backend):
-            # Construct an artificial tool runtime to resolve backend factory
+            # Construct an artificial tool runtime to resolve backend factory.
+            # `tools=[]` reflects the synthetic nature: this runtime is only
+            # passed to the user's backend factory, which inspects
+            # `context`/`state`/`store`/`config` and never dispatches tools.
             tool_runtime = ToolRuntime(
                 state=state,
                 context=runtime.context,
@@ -911,6 +914,7 @@ class SkillsMiddleware(AgentMiddleware[SkillsState, ContextT, ResponseT]):
                 store=runtime.store,
                 config=config,
                 tool_call_id=None,
+                tools=[],
             )
             backend = self._backend(tool_runtime)  # ty: ignore[call-top-callable, invalid-argument-type]
             if backend is None:

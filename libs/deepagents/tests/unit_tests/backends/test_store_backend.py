@@ -153,6 +153,7 @@ def test_store_backend_intercept_large_tool_result(file_format):
     large_content = "y" * 5000
     tool_message = ToolMessage(content=large_content, tool_call_id="test_456")
     rt = ToolRuntime(
+        tools=[],
         state={"messages": []},
         context=None,
         tool_call_id="t2",

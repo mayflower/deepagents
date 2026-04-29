@@ -22,7 +22,7 @@ from deepagents.middleware.subagents import GENERAL_PURPOSE_SUBAGENT
 
 
 def _runtime(tool_call_id: str = "") -> ToolRuntime:
-    return ToolRuntime(state={}, context=None, tool_call_id=tool_call_id, store=None, stream_writer=lambda _: None, config={})
+    return ToolRuntime(tools=[], state={}, context=None, tool_call_id=tool_call_id, store=None, stream_writer=lambda _: None, config={})
 
 
 def _make_backend(files: dict | None = None) -> StoreBackend:

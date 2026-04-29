@@ -66,7 +66,7 @@ def _make_backend(files=None):
 
 
 def _runtime(tool_call_id=""):
-    return ToolRuntime(state={}, context=None, tool_call_id=tool_call_id, store=None, stream_writer=lambda _: None, config={})
+    return ToolRuntime(tools=[], state={}, context=None, tool_call_id=tool_call_id, store=None, stream_writer=lambda _: None, config={})
 
 
 class TestAddMiddleware:
@@ -1195,6 +1195,7 @@ class TestFilesystemMiddleware:
         middleware = FilesystemMiddleware(backend=ImageBackend())
         state = FilesystemState(messages=[], files={})
         runtime = ToolRuntime(
+            tools=[],
             state=state,
             context=None,
             tool_call_id="img-read-1",
@@ -1226,6 +1227,7 @@ class TestFilesystemMiddleware:
         middleware = FilesystemMiddleware(backend=ImageBackend())
         state = FilesystemState(messages=[], files={})
         runtime = ToolRuntime(
+            tools=[],
             state=state,
             context=None,
             tool_call_id="img-read-err",
@@ -1250,6 +1252,7 @@ class TestFilesystemMiddleware:
         middleware = FilesystemMiddleware(backend=StrReadBackend())
         state = FilesystemState(messages=[], files={})
         runtime = ToolRuntime(
+            tools=[],
             state=state,
             context=None,
             tool_call_id="str-read",
@@ -1275,6 +1278,7 @@ class TestFilesystemMiddleware:
         middleware = FilesystemMiddleware(backend=StrReadBackend())
         state = FilesystemState(messages=[], files={})
         runtime = ToolRuntime(
+            tools=[],
             state=state,
             context=None,
             tool_call_id="str-trunc",
@@ -1305,6 +1309,7 @@ class TestFilesystemMiddleware:
         )
         state = FilesystemState(messages=[], files={})
         runtime = ToolRuntime(
+            tools=[],
             state=state,
             context=None,
             tool_call_id="str-tok",
@@ -1345,6 +1350,7 @@ class TestFilesystemMiddleware:
 
         # Create runtime with StoreBackend
         runtime = ToolRuntime(
+            tools=[],
             state={},
             context=None,
             tool_call_id="test_exec",
@@ -1378,6 +1384,7 @@ class TestFilesystemMiddleware:
 
         state = FilesystemState(messages=[], files={})
         rt = ToolRuntime(
+            tools=[],
             state=state,
             context=None,
             tool_call_id="test_fmt",
@@ -1414,6 +1421,7 @@ class TestFilesystemMiddleware:
 
         state = FilesystemState(messages=[], files={})
         rt = ToolRuntime(
+            tools=[],
             state=state,
             context=None,
             tool_call_id="test_fail",
@@ -1450,6 +1458,7 @@ class TestFilesystemMiddleware:
 
         state = FilesystemState(messages=[], files={})
         rt = ToolRuntime(
+            tools=[],
             state=state,
             context=None,
             tool_call_id="test_trunc",
@@ -1481,6 +1490,7 @@ class TestFilesystemMiddleware:
 
         state = FilesystemState(messages=[], files={})
         ToolRuntime(
+            tools=[],
             state=state,
             context=None,
             tool_call_id="test",
@@ -1943,6 +1953,7 @@ class TestBuiltinTruncationTools:
 
         state = FilesystemState(messages=[], files={})
         rt = ToolRuntime(
+            tools=[],
             state=state,
             context=None,
             tool_call_id="test_zero_timeout",
@@ -1974,6 +1985,7 @@ class TestBuiltinTruncationTools:
 
         state = FilesystemState(messages=[], files={})
         rt = ToolRuntime(
+            tools=[],
             state=state,
             context=None,
             tool_call_id="test_neg_timeout",
@@ -2007,6 +2019,7 @@ class TestBuiltinTruncationTools:
 
         state = FilesystemState(messages=[], files={})
         rt = ToolRuntime(
+            tools=[],
             state=state,
             context=None,
             tool_call_id="test_fwd_timeout",
@@ -2036,6 +2049,7 @@ class TestBuiltinTruncationTools:
 
         state = FilesystemState(messages=[], files={})
         rt = ToolRuntime(
+            tools=[],
             state=state,
             context=None,
             tool_call_id="test_max_execute_timeout",
@@ -2070,6 +2084,7 @@ class TestBuiltinTruncationTools:
 
         state = FilesystemState(messages=[], files={})
         rt = ToolRuntime(
+            tools=[],
             state=state,
             context=None,
             tool_call_id="test_at_max_execute_timeout",
@@ -2101,6 +2116,7 @@ class TestBuiltinTruncationTools:
 
         state = FilesystemState(messages=[], files={})
         rt = ToolRuntime(
+            tools=[],
             state=state,
             context=None,
             tool_call_id="test_none_timeout",

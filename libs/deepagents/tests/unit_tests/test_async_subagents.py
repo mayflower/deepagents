@@ -32,6 +32,7 @@ def _make_spec(name: str = "test-agent", **overrides: Any) -> AsyncSubAgent:
 
 def _make_runtime(tool_call_id: str = "tc_test") -> ToolRuntime:
     return ToolRuntime(
+        tools=[],
         state={},
         context=None,
         tool_call_id=tool_call_id,
@@ -65,6 +66,7 @@ def _make_runtime_with_task(
         },
     }
     return ToolRuntime(
+        tools=[],
         state={"async_tasks": tasks},
         context=None,
         tool_call_id=tool_call_id,
@@ -279,6 +281,7 @@ class TestCheckTool:
             },
         }
         return ToolRuntime(
+            tools=[],
             state={"async_tasks": tasks},
             context=None,
             tool_call_id=tool_call_id,
@@ -384,6 +387,7 @@ class TestUpdateTool:
             },
         }
         rt = ToolRuntime(
+            tools=[],
             state={"async_tasks": tasks_state},
             context=None,
             tool_call_id="tc_update",
@@ -460,6 +464,7 @@ class TestListTasksTool:
             },
         }
         rt = ToolRuntime(
+            tools=[],
             state={"async_tasks": tasks},
             context=None,
             tool_call_id="tc_list",
@@ -522,6 +527,7 @@ class TestListTasksTool:
             },
         }
         rt = ToolRuntime(
+            tools=[],
             state={"async_tasks": tasks},
             context=None,
             tool_call_id="tc_list",
@@ -569,6 +575,7 @@ class TestListTasksTool:
             },
         }
         rt = ToolRuntime(
+            tools=[],
             state={"async_tasks": tasks},
             context=None,
             tool_call_id="tc_list",
@@ -647,6 +654,7 @@ class TestAsyncTools:
             },
         }
         rt = ToolRuntime(
+            tools=[],
             state={"async_tasks": tracked_tasks},
             context=None,
             tool_call_id="tc_async_check",
@@ -686,6 +694,7 @@ class TestAsyncTools:
             },
         }
         rt = ToolRuntime(
+            tools=[],
             state={"async_tasks": tasks_state},
             context=None,
             tool_call_id="tc_async_update",

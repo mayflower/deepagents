@@ -234,6 +234,7 @@ def test_filesystem_backend_intercept_large_tool_result(tmp_path: Path):
     """Test that FilesystemBackend properly handles large tool result interception."""
     root = tmp_path
     rt = ToolRuntime(
+        tools=[],
         state={"messages": [], "files": {}},
         context=None,
         tool_call_id="test_fs",

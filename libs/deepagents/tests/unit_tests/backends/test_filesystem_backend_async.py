@@ -213,6 +213,7 @@ async def test_filesystem_backend_intercept_large_tool_result_async(tmp_path: Pa
     """Test that FilesystemBackend properly handles large tool result interception in async context."""
     root = tmp_path
     rt = ToolRuntime(
+        tools=[],
         state={"messages": [], "files": {}},
         context=None,
         tool_call_id="test_fs",

@@ -391,6 +391,9 @@ class _DeepAgentsSummarizationMiddleware(AgentMiddleware):
             # optional in TypedDict).
             config = cast("RunnableConfig", getattr(runtime, "config", {}))
 
+            # `tools=[]` reflects the synthetic nature: this runtime is only
+            # passed to the user's backend factory, which inspects
+            # `context`/`state`/`store`/`config` and never dispatches tools.
             tool_runtime = ToolRuntime(
                 state=state,
                 context=runtime.context,
@@ -398,6 +401,7 @@ class _DeepAgentsSummarizationMiddleware(AgentMiddleware):
                 store=runtime.store,
                 config=config,
                 tool_call_id=None,
+                tools=[],
             )
             return self._backend(tool_runtime)  # ty: ignore[call-top-callable, invalid-argument-type]
         return self._backend
